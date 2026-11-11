@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <title>Ложка — генератор рецептов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Ложка — на главную"><span class="brand-mark">л</span><span>ложка</span></a>
+        <div class="topbar-note"><span class="status-dot"></span> Вдохновение на кухне</div>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> ВКУСНОЕ НАЧИНАЕТСЯ ЗДЕСЬ</p>
+            <h1 id="page-title">Что есть —<br /><span>то и приготовим.</span></h1>
+            <p class="hero-description">Отметь продукты, которые уже есть под рукой. Мы придумаем, что из них приготовить.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true"><span class="art-sun"></span><span class="art-bowl"><svg viewBox="0 0 120 100"><path d="M14 43h92l-9 28a39 39 0 0 1-74 0z" fill="#fffefa" stroke="#789064" stroke-width="4" stroke-linejoin="round"/><path d="M21 43a39 39 0 0 1 78 0" fill="#d9e4bf" stroke="#789064" stroke-width="4"/><path d="M43 36c3-10 12-13 18-4m5 6c2-10 11-13 17-5" fill="none" stroke="#92a875" stroke-width="4" stroke-linecap="round"/><path d="M39 79h42" stroke="#789064" stroke-width="4" stroke-linecap="round"/></svg></span></div>
+        </section>
+
+        <div class="workspace">
+          <section class="picker-card" aria-labelledby="picker-title">
+            <div class="section-heading">
+              <div><p class="step-label">ШАГ 01</p><h2 id="picker-title">Что у тебя есть?</h2></div>
+              <button class="text-button" id="clear-selection" type="button">Сбросить</button>
+            </div>
+            <p class="section-hint">Выбери всё, что найдётся на кухне</p>
+            <div id="ingredient-groups" class="ingredient-groups"></div>
+            <label class="extra-label" for="extra-ingredients">Ещё что-нибудь? <span>необязательно</span></label>
+            <input id="extra-ingredients" class="extra-input" type="text" placeholder="Например, остатки риса или зелень" autocomplete="off" />
+
+            <div class="api-box">
+              <div class="api-copy"><span class="key-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 8-8 3 3-2 2-2-2-2 2 2 2-2 2"/></svg></span><div><label for="api-key">Ключ RouterAI</label><p>Нужен для генерации текста и картинки. Не сохраняется.</p></div></div>
+              <input id="api-key" type="password" placeholder="Вставь API-ключ RouterAI" autocomplete="off" spellcheck="false" />
+              <a href="https://routerai.ru/settings/keys" target="_blank" rel="noreferrer">Получить ключ <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 12 12 4M5 4h7v7"/></svg></a>
+            </div>
+
+            <button id="generate-button" class="generate-button" type="button"><span>Сгенерировать рецепт</span><span class="button-arrow" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></span></button>
+            <p class="privacy-note">Ваш ключ используется только для этого запроса и не сохраняется.</p>
+          </section>
+
+          <section id="recipe-panel" class="recipe-card" aria-live="polite" aria-labelledby="recipe-title">
+            <div class="recipe-empty" id="recipe-empty">
+              <div class="empty-illustration" aria-hidden="true"><svg class="empty-star" viewBox="0 0 24 24"><path d="m12 2 2.8 6.7L22 11l-7.2 2.3L12 20l-2.8-6.7L2 11l7.2-2.3L12 2Z"/></svg><svg viewBox="0 0 56 56"><path d="M28 16c-12 0-20 8-20 19a19 19 0 0 0 38 0c0-11-7-19-18-19z" fill="#d96a4f"/><path d="M28 18c-3-8-10-9-15-7 3 1 5 4 6 8m9-1c2-8 8-10 14-8-4 2-5 5-6 9m-9-2c-1-5 1-8 4-11" fill="none" stroke="#6e8d56" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="step-label">ШАГ 02</p>
+              <h2 id="recipe-title">Здесь появится<br />твой рецепт</h2>
+              <p>Выбери продукты слева —<br />и мы начнём колдовать.</p>
+              <div class="empty-doodle" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 7c0 11 6 17 19 19m-8-8 8 8-2-11"/></svg></div>
+            </div>
+            <div class="recipe-result" id="recipe-result" hidden>
+              <div class="recipe-result-top"><p class="step-label">ТВОЙ РЕЦЕПТ</p><button class="text-button" id="copy-recipe" type="button">Скопировать</button></div>
+              <div id="recipe-content" class="recipe-content"></div>
+              <section class="dish-image-section" aria-labelledby="dish-image-title">
+                <p class="step-label" id="dish-image-title">ИЗОБРАЖЕНИЕ БЛЮДА</p>
+                <div class="dish-image-frame">
+                  <div id="dish-image-loading" class="dish-image-loading" role="status"><div class="loader" aria-hidden="true"></div><p>Генерируем фото блюда…</p></div>
+                  <img id="dish-image" class="dish-image" alt="Сгенерированное изображение готового блюда" hidden />
+                  <p id="dish-image-error" class="dish-image-error" role="status" hidden></p>
+                </div>
+              </section>
+            </div>
+            <div class="loading-state" id="loading-state" hidden><div class="loader" aria-hidden="true"></div><h2>Придумываем вкусное…</h2><p>Подбираем сочетания из твоих продуктов</p></div>
+            <div class="error-message" id="error-message" role="alert" hidden></div>
+          </section>
+        </div>
+      </main>
+      <footer class="footer"><span>Сделано с аппетитом</span><span>© 2026 ложка</span></footer>
+    </div>
+  </body>
+</html>
