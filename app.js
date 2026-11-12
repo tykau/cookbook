@@ -122,7 +122,7 @@ async function generateRecipe() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-v4.1-flash-1017',
+        model: 'deepseek/deepseek-v4-flash-0731',
         messages: [
           {
             role: 'system',
